@@ -1,0 +1,15 @@
+{% extends "learning_logs/base.html" %}
+
+{% block page_header %}
+<div class="p-3 mb bg-light border rounded-3">
+    <div class="container-fluid py-4">
+        <h1 class="display-3"> Tracking Your Learning.</h1>
+
+        <p class="lead">
+            Make your learning visible by creating topics and adding entries to those topics. You can create as many topics as you like, and you can add as many entries to each topic as you like. Each entry has a date and time associated with it, so you can track your progress over time.
+        </p>
+        
+        <a class="btn btn-primary btn-lg mt-1" href="{% url 'accounts:register' %}">Register &raquo;</a>
+    </div>
+</div>
+{% endblock page_header %}
