@@ -11,6 +11,7 @@ env/
 
 # Django / local data
 *.sqlite3
+staticfiles/
 
 # Tooling caches
 .pytest_cache/
