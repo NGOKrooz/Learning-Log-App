@@ -27,19 +27,13 @@ SECRET_KEY = os.environ.get(
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
+DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
-
-render_hostname = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
-if render_hostname:
-    ALLOWED_HOSTS.append(render_hostname)
-
-additional_hosts = os.environ.get('ALLOWED_HOSTS', '')
-if additional_hosts:
-    ALLOWED_HOSTS.extend(
-        host.strip() for host in additional_hosts.split(',') if host.strip()
-    )
+ALLOWED_HOSTS = [
+    '.onrender.com',  # Allow all Render subdomains
+    '127.0.0.1',
+    'localhost',
+]
 
 
 # Application definition
@@ -95,8 +89,9 @@ WSGI_APPLICATION = 'learning_log.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+import dj_database_url
+
 if os.environ.get('DATABASE_URL'):
-    import dj_database_url
     DATABASES = {
         'default': dj_database_url.config(default=os.environ['DATABASE_URL'])
     }
