@@ -1,0 +1,30 @@
+{% comment %}
+Button Component
+
+Usage:
+{% include "components/button.html" with variant="primary" size="md" text="Click me" href="#" %}
+
+Parameters:
+- variant: primary, secondary, ghost (default: primary)
+- size: sm, md, lg (default: md)
+- text: button text (required)
+- href: if provided, renders as <a> instead of <button>
+- disabled: true/false (default: false)
+- block: true/false for full width (default: false)
+- type: button type (default: button)
+- extra_classes: additional CSS classes
+{% endcomment %}
+
+{% if href %}
+<a href="{{ href }}"
+   class="btn btn-{{ variant|default:'primary' }} {% if size %}btn-{{ size }}{% endif %} {% if block %}btn-block{% endif %} {{ extra_classes }}"
+   {% if disabled %}aria-disabled="true"{% endif %}>
+  {{ text }}
+</a>
+{% else %}
+<button type="{{ type|default:'button' }}"
+        class="btn btn-{{ variant|default:'primary' }} {% if size %}btn-{{ size }}{% endif %} {% if block %}btn-block{% endif %} {{ extra_classes }}"
+        {% if disabled %}disabled{% endif %}>
+  {{ text }}
+</button>
+{% endif %}

@@ -1,10 +1,90 @@
 {% extends "learning_logs/base.html" %}
+
+{% block title %}Edit Entry - {{ topic.text }}{% endblock %}
+
+{% block page_header %}
+<div class="page-header">
+  <div class="entry-header">
+    <div class="entry-info">
+      <h1>Edit Entry</h1>
+      <p class="entry-topic">for <a href="{% url 'learning_logs:topic' topic.id %}">{{ topic.text }}</a></p>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
 {% block content %}
-  <p><a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a></p>
-  <p>Edit entry:</p>
-  <form action="{% url 'learning_logs:edit_entry' entry.id %}" method='post'>
+<div class="form-section">
+  {% include "components/card.html" with title="Entry Details" %}
+  {% block card_content %}
+  <form action="{% url 'learning_logs:edit_entry' entry.id %}" method="post" data-validate>
     {% csrf_token %}
-    {{ form.as_div }}
-    <button name="submit">Save changes</button>
+
+    {% include "components/input.html" with field=form.text placeholder="Write your learning entry here..." type="textarea" %}
+
+    <div class="form-actions">
+      {% include "components/button.html" with text="Save Changes" variant="primary" type="submit" %}
+      {% include "components/button.html" with text="Cancel" variant="ghost" href="learning_logs:topic" href_extra=topic.id %}
+    </div>
   </form>
-{% endblock content %}
+  {% endblock %}
+  {% endblock %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<style>
+.page-header {
+  text-align: center;
+  margin-bottom: var(--spacing-6);
+}
+
+.entry-header {
+  display: flex;
+  justify-content: center;
+}
+
+.entry-info h1 {
+  color: var(--color-gray-900);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 var(--spacing-2) 0;
+}
+
+.entry-topic {
+  color: var(--color-gray-600);
+  margin: 0;
+}
+
+.entry-topic a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.entry-topic a:hover {
+  text-decoration: underline;
+}
+
+.form-section {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.form-actions {
+  display: flex;
+  gap: var(--spacing-3);
+  margin-top: var(--spacing-6);
+  justify-content: flex-end;
+}
+
+@media (max-width: 480px) {
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+  }
+}
+</style>
+{% endblock %}

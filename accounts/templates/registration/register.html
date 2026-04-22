@@ -1,10 +1,112 @@
 {% extends "learning_logs/base.html" %}
 
+{% block title %}Register - Learning Log{% endblock %}
+
 {% block content %}
-  <h2>Register</h2>
-  <form action="{% url 'accounts:register' %}" method="post">
-    {% csrf_token %}
-    {{ form.as_div }}
-    <button name="submit">Register</button>
-  </form>
-{% endblock content %}
+<div class="register-container">
+  <div class="register-card">
+    <div class="register-header">
+      <h2>Create Your Account</h2>
+      <p>Join us and start your learning journey</p>
+    </div>
+
+    <form action="{% url 'accounts:register' %}" method="post" class="register-form" data-validate>
+      {% csrf_token %}
+
+      {% include "components/input.html" with field=form.username icon="👤" placeholder="Choose a username" %}
+
+      {% include "components/input.html" with field=form.password1 type="password" icon="👁️" placeholder="Create a password" %}
+
+      {% include "components/input.html" with field=form.password2 type="password" icon="👁️" placeholder="Confirm your password" %}
+
+      {% include "components/button.html" with text="Create Account" variant="primary" block=True type="submit" %}
+    </form>
+
+    <div class="register-footer">
+      <p>Already have an account? <a href="{% url 'accounts:login' %}">Sign in</a></p>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<style>
+.register-container {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  padding: var(--spacing-4);
+  margin: var(--spacing-8) 0;
+  border-radius: var(--border-radius-xl);
+}
+
+.register-card {
+  background: var(--color-white);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-xl);
+  padding: var(--spacing-8);
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+}
+
+.register-header {
+  text-align: center;
+  margin-bottom: var(--spacing-6);
+}
+
+.register-header h2 {
+  color: var(--color-gray-900);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 var(--spacing-2) 0;
+}
+
+.register-header p {
+  color: var(--color-gray-600);
+  font-size: var(--font-size-base);
+  margin: 0;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.register-footer {
+  text-align: center;
+  margin-top: var(--spacing-6);
+  padding-top: var(--spacing-4);
+  border-top: 1px solid var(--color-gray-200);
+}
+
+.register-footer p {
+  color: var(--color-gray-600);
+  font-size: var(--font-size-sm);
+  margin: 0;
+}
+
+.register-footer a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+}
+
+.register-footer a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .register-card {
+    padding: var(--spacing-4);
+  }
+
+  .register-header h2 {
+    font-size: var(--font-size-2xl);
+  }
+}
+</style>
+{% endblock %}

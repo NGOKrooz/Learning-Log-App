@@ -1,11 +1,72 @@
 {% extends "learning_logs/base.html" %}
 
-{% block content %}
-  <p>Add a new topic:</p>
+{% block title %}New Topic - Learning Log{% endblock %}
 
-  <form action="{% url 'learning_logs:new_topic' %}" method='post'>
+{% block page_header %}
+<div class="page-header">
+  <h1>Create New Topic</h1>
+  <p>Add a new topic to organize your learning entries.</p>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="form-section">
+  {% include "components/card.html" with title="Topic Details" %}
+  {% block card_content %}
+  <form action="{% url 'learning_logs:new_topic' %}" method="post" data-validate>
     {% csrf_token %}
-    {{ form.as_div }}
-    <button name="submit">Add topic</button>
-   </form>
-{% endblock content %}
+
+    {% include "components/input.html" with field=form.text placeholder="Enter topic name (e.g., Python Programming)" %}
+
+    <div class="form-actions">
+      {% include "components/button.html" with text="Create Topic" variant="primary" type="submit" %}
+      {% include "components/button.html" with text="Cancel" variant="ghost" href="learning_logs:topics" %}
+    </div>
+  </form>
+  {% endblock %}
+  {% endblock %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<style>
+.page-header {
+  text-align: center;
+  margin-bottom: var(--spacing-6);
+}
+
+.page-header h1 {
+  color: var(--color-gray-900);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 var(--spacing-2) 0;
+}
+
+.page-header p {
+  color: var(--color-gray-600);
+  margin: 0;
+}
+
+.form-section {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.form-actions {
+  display: flex;
+  gap: var(--spacing-3);
+  margin-top: var(--spacing-6);
+  justify-content: flex-end;
+}
+
+@media (max-width: 480px) {
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+  }
+}
+</style>
+{% endblock %}

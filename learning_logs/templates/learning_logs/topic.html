@@ -1,26 +1,188 @@
-{% extends 'learning_logs/base.html' %}
+{% extends "learning_logs/base.html" %}
+
+{% block title %}{{ topic.text }} - Learning Log{% endblock %}
 
 {% block page_header %}
-  <h1>{{ topic.text }}</h1>
-{% endblock page_header %}
+<div class="page-header">
+  <div class="topic-header">
+    <div class="topic-info">
+      <h1>{{ topic.text }}</h1>
+      <p class="topic-meta">Created {{ topic.date_added|date:"F j, Y" }} • {{ entries|length }} entries</p>
+    </div>
+    <div class="topic-actions">
+      {% include "components/button.html" with text="Add Entry" variant="primary" href="learning_logs:new_entry" href_extra=topic.id %}
+    </div>
+  </div>
+</div>
+{% endblock %}
 
 {% block content %}
-
-   <p>
-    <a href="{% url 'learning_logs:new_entry' topic.id %}">Add new entry</a>
-  </p>
-
-     {% for entry in entries %}
-      <div class="card mb-3">
-        <!-- Card header with timestamp and edit link -->
-        <h4 class="card-header">
-          {{ entry.date_added|date:"M d, Y H:i" }}
-          <small><a href="{% url 'learning_logs:edit_entry' entry.id %}">edit entry</a></small>
-         </h4>
-        <!-- Card body with entry text -->
-        <div class="card-body">{{ entry.text|linebreaks }}</div>
+<div class="entries-section">
+  {% if entries %}
+  <div class="entries-list">
+    {% for entry in entries %}
+    <div class="entry-card">
+      <div class="entry-header">
+        <div class="entry-date">{{ entry.date_added|date:"M j, Y \a\t g:i A" }}</div>
+        <div class="entry-actions">
+          <a href="{% url 'learning_logs:edit_entry' entry.id %}" class="btn btn-ghost btn-sm">Edit</a>
         </div>
-     {% empty %}
-      <p>There are no entries for this topic yet.</p>
+      </div>
+      <div class="entry-content">
+        {{ entry.text|linebreaks }}
+      </div>
+    </div>
     {% endfor %}
-{% endblock content %}
+  </div>
+  {% else %}
+  {% include "components/card.html" %}
+  {% block card_content %}
+  <div class="empty-state">
+    <div class="empty-icon">📝</div>
+    <h3>No entries yet</h3>
+    <p>Start documenting your learning by adding your first entry to this topic.</p>
+    {% include "components/button.html" with text="Write First Entry" variant="primary" href="learning_logs:new_entry" href_extra=topic.id %}
+  </div>
+  {% endblock %}
+  {% endblock %}
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<style>
+.page-header {
+  margin-bottom: var(--spacing-6);
+}
+
+.topic-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--spacing-4);
+}
+
+.topic-info h1 {
+  color: var(--color-gray-900);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 var(--spacing-2) 0;
+}
+
+.topic-meta {
+  color: var(--color-gray-600);
+  font-size: var(--font-size-base);
+  margin: 0;
+}
+
+.topic-actions {
+  flex-shrink: 0;
+}
+
+.entries-section {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.entries-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.entry-card {
+  background: var(--color-white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-gray-200);
+  overflow: hidden;
+}
+
+.entry-header {
+  background: var(--color-gray-50);
+  padding: var(--spacing-3) var(--spacing-4);
+  border-bottom: 1px solid var(--color-gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.entry-date {
+  color: var(--color-gray-600);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.entry-actions {
+  display: flex;
+  gap: var(--spacing-2);
+}
+
+.entry-content {
+  padding: var(--spacing-4);
+  color: var(--color-gray-900);
+  line-height: var(--line-height-relaxed);
+}
+
+.empty-state {
+  text-align: center;
+  padding: var(--spacing-8) 0;
+}
+
+.empty-icon {
+  font-size: var(--font-size-5xl);
+  margin-bottom: var(--spacing-4);
+}
+
+.empty-state h3 {
+  color: var(--color-gray-900);
+  font-size: var(--font-size-xl);
+  margin: 0 0 var(--spacing-2) 0;
+}
+
+.empty-state p {
+  color: var(--color-gray-600);
+  margin: 0 0 var(--spacing-4) 0;
+}
+
+@media (max-width: 768px) {
+  .topic-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .topic-actions {
+    align-self: stretch;
+  }
+
+  .topic-actions .btn {
+    width: 100%;
+  }
+
+  .entry-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-2);
+  }
+
+  .entry-actions {
+    align-self: stretch;
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 480px) {
+  .topic-info h1 {
+    font-size: var(--font-size-2xl);
+  }
+
+  .entry-card {
+    margin: 0 -var(--spacing-2);
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+}
+</style>
+{% endblock %}

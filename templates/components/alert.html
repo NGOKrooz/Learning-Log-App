@@ -1,0 +1,26 @@
+{% comment %}
+Alert Component
+
+Usage:
+{% include "components/alert.html" with type="success" message="Operation successful!" dismissible=True %}
+
+Parameters:
+- type: success, error, warning, info (default: info)
+- message: alert message (required)
+- dismissible: true/false (default: false)
+- extra_classes: additional CSS classes
+{% endcomment %}
+
+<div class="alert alert-{{ type|default:'info' }} {{ extra_classes }}" role="alert">
+  <span class="alert-icon">
+    {% if type == 'success' %}✓
+    {% elif type == 'error' %}✗
+    {% elif type == 'warning' %}⚠
+    {% else %}ℹ
+    {% endif %}
+  </span>
+  <div class="alert-content">{{ message }}</div>
+  {% if dismissible %}
+  <button class="alert-dismiss" aria-label="Dismiss alert">&times;</button>
+  {% endif %}
+</div>

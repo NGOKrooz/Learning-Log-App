@@ -1,19 +1,185 @@
 {% extends "learning_logs/base.html" %}
 
+{% block title %}Topics - Learning Log{% endblock %}
+
 {% block page_header %}
-  <h1>Topics</h1>
-{% endblock page_header %}
+<div class="page-header">
+  <h1>Your Topics</h1>
+  <p>Organize your learning into different topics and track your progress in each area.</p>
+</div>
+{% endblock %}
 
 {% block content %}
-
-<ul class="list-group border-bottom pb-2 mb-4">
+<div class="topics-section">
+  {% if topics %}
+  <div class="topics-grid">
     {% for topic in topics %}
-        <li class="list-group-item border-0">
-            <a href="{% url 'learning_logs:topic' topic.id %}">{{ topic.text }}</a>
-        </li>
-    {% empty %}
-        <li class="list-group-item border-0">No topics have been added yet.</li>
+    <div class="topic-card">
+      <div class="topic-content">
+        <h3 class="topic-title">
+          <a href="{% url 'learning_logs:topic' topic.id %}">{{ topic.text }}</a>
+        </h3>
+        <div class="topic-meta">
+          <span class="topic-date">Created {{ topic.date_added|date:"M j, Y" }}</span>
+          <span class="topic-entries">{{ topic.entry_set.count }} entries</span>
+        </div>
+      </div>
+      <div class="topic-actions">
+        <a href="{% url 'learning_logs:topic' topic.id %}" class="btn btn-ghost btn-sm">View Entries</a>
+      </div>
+    </div>
     {% endfor %}
-    <a href="{% url 'learning_logs:new_topic' %}"><br>Add a new topic</a>
-</ul>
-{%endblock content %}
+  </div>
+  {% else %}
+  {% include "components/card.html" %}
+  {% block card_content %}
+  <div class="empty-state">
+    <div class="empty-icon">📚</div>
+    <h3>No topics yet</h3>
+    <p>Start your learning journey by creating your first topic.</p>
+    {% include "components/button.html" with text="Create Your First Topic" variant="primary" href="learning_logs:new_topic" %}
+  </div>
+  {% endblock %}
+  {% endblock %}
+  {% endif %}
+
+  <div class="topics-actions">
+    {% include "components/button.html" with text="Add New Topic" variant="primary" href="learning_logs:new_topic" %}
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<style>
+.page-header {
+  text-align: center;
+  margin-bottom: var(--spacing-8);
+}
+
+.page-header h1 {
+  color: var(--color-gray-900);
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 var(--spacing-2) 0;
+}
+
+.page-header p {
+  color: var(--color-gray-600);
+  font-size: var(--font-size-lg);
+  margin: 0;
+}
+
+.topics-section {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.topics-grid {
+  display: grid;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-6);
+}
+
+.topic-card {
+  background: var(--color-white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--spacing-4);
+  border: 1px solid var(--color-gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all var(--transition-fast);
+}
+
+.topic-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.topic-content {
+  flex: 1;
+}
+
+.topic-title {
+  margin: 0 0 var(--spacing-2) 0;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+}
+
+.topic-title a {
+  color: var(--color-gray-900);
+  text-decoration: none;
+}
+
+.topic-title a:hover {
+  color: var(--color-primary);
+}
+
+.topic-meta {
+  display: flex;
+  gap: var(--spacing-4);
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-500);
+}
+
+.topic-actions {
+  flex-shrink: 0;
+}
+
+.empty-state {
+  text-align: center;
+  padding: var(--spacing-8) 0;
+}
+
+.empty-icon {
+  font-size: var(--font-size-5xl);
+  margin-bottom: var(--spacing-4);
+}
+
+.empty-state h3 {
+  color: var(--color-gray-900);
+  font-size: var(--font-size-xl);
+  margin: 0 0 var(--spacing-2) 0;
+}
+
+.empty-state p {
+  color: var(--color-gray-600);
+  margin: 0 0 var(--spacing-4) 0;
+}
+
+.topics-actions {
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .topic-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-3);
+  }
+
+  .topic-actions {
+    align-self: stretch;
+  }
+
+  .topic-actions .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 {
+    font-size: var(--font-size-3xl);
+  }
+
+  .topics-grid {
+    gap: var(--spacing-3);
+  }
+
+  .topic-card {
+    padding: var(--spacing-3);
+  }
+}
+</style>
+{% endblock %}

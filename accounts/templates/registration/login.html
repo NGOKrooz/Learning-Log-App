@@ -1,17 +1,113 @@
-{% extends 'learning_logs/base.html' %}
-{% load django_bootstrap5 %}
+{% extends "learning_logs/base.html" %}
 
-{% block page_header %}
-  <h2>Log in to your account.</h2>
-{% endblock page_header %}
+{% block title %}Login - Learning Log{% endblock %}
 
 {% block content %}
-{% if form.errors %}
-  <p>Your username and password didn't match. Please try again.</p>
-{% endif %}
-<form action="{% url 'accounts:login' %}" method="post">
-  {% csrf_token %}
-  {% bootstrap_form form %}
-  {% bootstrap_button type="submit" content="Log in" %}
-</form>
-{% endblock content %}
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <h2>Welcome Back</h2>
+      <p>Sign in to continue your learning journey</p>
+    </div>
+
+    {% if form.errors %}
+    {% include "components/alert.html" with type="error" message="Your username and password didn't match. Please try again." %}
+    {% endif %}
+
+    <form action="{% url 'accounts:login' %}" method="post" class="login-form" data-validate>
+      {% csrf_token %}
+
+      {% include "components/input.html" with field=form.username icon="👤" placeholder="Enter your username" %}
+
+      {% include "components/input.html" with field=form.password type="password" icon="👁️" placeholder="Enter your password" %}
+
+      {% include "components/button.html" with text="Sign In" variant="primary" block=True type="submit" %}
+    </form>
+
+    <div class="login-footer">
+      <p>Don't have an account? <a href="{% url 'accounts:register' %}">Create one</a></p>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<style>
+.login-container {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  padding: var(--spacing-4);
+  margin: var(--spacing-8) 0;
+  border-radius: var(--border-radius-xl);
+}
+
+.login-card {
+  background: var(--color-white);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-xl);
+  padding: var(--spacing-8);
+  width: 100%;
+  max-width: 400px;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: var(--spacing-6);
+}
+
+.login-header h2 {
+  color: var(--color-gray-900);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 var(--spacing-2) 0;
+}
+
+.login-header p {
+  color: var(--color-gray-600);
+  font-size: var(--font-size-base);
+  margin: 0;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.login-footer {
+  text-align: center;
+  margin-top: var(--spacing-6);
+  padding-top: var(--spacing-4);
+  border-top: 1px solid var(--color-gray-200);
+}
+
+.login-footer p {
+  color: var(--color-gray-600);
+  font-size: var(--font-size-sm);
+  margin: 0;
+}
+
+.login-footer a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+}
+
+.login-footer a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: var(--spacing-4);
+  }
+
+  .login-header h2 {
+    font-size: var(--font-size-2xl);
+  }
+}
+</style>
+{% endblock %}
