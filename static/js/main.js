@@ -52,30 +52,38 @@ class LearningLogUI {
    * Setup password visibility toggles
    */
   setupPasswordToggles() {
-    const toggles = document.querySelectorAll('.password-toggle');
+    const toggles = document.querySelectorAll('.toggle-password, .password-toggle');
 
     toggles.forEach(toggle => {
       const targetId = toggle.dataset.target;
-      const targetInput = document.getElementById(targetId);
+      const passwordInput = document.getElementById(targetId);
+      const icon = toggle.querySelector('.toggle-icon');
 
-      if (targetInput) {
-        this.updatePasswordToggleIcon(toggle, targetInput.type === 'password');
-
-        toggle.addEventListener('click', () => {
-          const isPassword = targetInput.type === 'password';
-          targetInput.type = isPassword ? 'text' : 'password';
-          this.updatePasswordToggleIcon(toggle, !isPassword);
-        });
+      if (!passwordInput || !icon) {
+        return;
       }
+
+      const isHidden = passwordInput.type === 'password';
+      this.updatePasswordToggleIcon(icon, isHidden, toggle);
+
+      toggle.addEventListener('click', () => {
+        const currentlyHidden = passwordInput.type === 'password';
+        passwordInput.type = currentlyHidden ? 'text' : 'password';
+        this.updatePasswordToggleIcon(icon, !currentlyHidden, toggle);
+      });
     });
   }
 
-  updatePasswordToggleIcon(toggle, isPassword) {
+  updatePasswordToggleIcon(icon, isHidden, toggle) {
     const showIcon = '👁️';
     const hideIcon = '🙈';
 
-    toggle.textContent = isPassword ? showIcon : hideIcon;
-    toggle.setAttribute('aria-label', isPassword ? 'Show password' : 'Hide password');
+    icon.textContent = isHidden ? showIcon : hideIcon;
+    icon.classList.toggle('fa-eye', isHidden);
+    icon.classList.toggle('fa-eye-slash', !isHidden);
+    if (toggle) {
+      toggle.setAttribute('aria-label', isHidden ? 'Show password' : 'Hide password');
+    }
   }
 
   /**

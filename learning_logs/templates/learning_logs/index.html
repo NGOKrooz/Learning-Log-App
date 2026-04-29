@@ -42,30 +42,13 @@
       <div class="stat-label">Entries Written</div>
     </div>
     <div class="stat-card">
-      <div class="stat-number">{{ recent_entries|length }}</div>
-      <div class="stat-label">Recent Entries</div>
+      <div class="stat-number">{{ topics_count }}</div>
+      <div class="stat-label">Topics Created</div>
     </div>
-  </div>
-
-  <div class="recent-entries-panel">
-    <h2 class="section-heading">Recent Entries</h2>
-    {% if recent_entries %}
-    <div class="recent-entries-list">
-      {% for entry in recent_entries %}
-      <article class="entry-card">
-        <div class="entry-meta">
-          <span class="entry-topic">{{ entry.topic.text }}</span>
-          <span class="entry-date">{{ entry.date_added|date:"M j, Y" }}</span>
-        </div>
-        <p class="entry-preview">{{ entry.text|truncatewords:20 }}</p>
-      </article>
-      {% endfor %}
+    <div class="stat-card">
+      <div class="stat-number">{{ entries_count }}</div>
+      <div class="stat-label">Entries Written</div>
     </div>
-    {% else %}
-    <div class="empty-state">
-      <p>No recent entries yet. Create a new topic or add an entry to see updates here.</p>
-    </div>
-    {% endif %}
   </div>
 </div>
 {% endif %}

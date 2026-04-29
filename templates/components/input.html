@@ -44,9 +44,13 @@ Parameters:
     {% endif %}
 
     {% if icon %}
-    <span class="input-icon {% if type == 'password' %}password-toggle clickable{% endif %}"
-          {% if type == 'password' %}data-target="{{ field.id_for_label }}" aria-label="Toggle password visibility"{% endif %}>
+    <span class="input-icon password-toggle toggle-password clickable"
+          {% if type == 'password' %}data-target="{{ field.id_for_label }}" aria-label="Show password"{% endif %}>
+      {% if type == 'password' %}
+      <i class="toggle-icon fa fa-eye">👁️</i>
+      {% else %}
       {{ icon }}
+      {% endif %}
     </span>
     {% endif %}
   </div>
