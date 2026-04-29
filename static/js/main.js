@@ -75,12 +75,7 @@ class LearningLogUI {
   }
 
   updatePasswordToggleIcon(icon, isHidden, toggle) {
-    const showIcon = '👁️';
-    const hideIcon = '🙈';
-
-    icon.textContent = isHidden ? showIcon : hideIcon;
-    icon.classList.toggle('fa-eye', isHidden);
-    icon.classList.toggle('fa-eye-slash', !isHidden);
+    icon.classList.replace(isHidden ? 'fa-eye-slash' : 'fa-eye', isHidden ? 'fa-eye' : 'fa-eye-slash');
     if (toggle) {
       toggle.setAttribute('aria-label', isHidden ? 'Show password' : 'Hide password');
     }

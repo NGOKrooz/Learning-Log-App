@@ -15,9 +15,9 @@
 
       {% include "components/input.html" with field=form.username icon="👤" placeholder="Choose a username" %}
 
-      {% include "components/input.html" with field=form.password1 type="password" icon="👁️" placeholder="Create a password" %}
+      {% include "components/input.html" with field=form.password1 type="password" placeholder="Create a password" %}
 
-      {% include "components/input.html" with field=form.password2 type="password" icon="👁️" placeholder="Confirm your password" %}
+      {% include "components/input.html" with field=form.password2 type="password" placeholder="Confirm your password" %}
 
       {% include "components/button.html" with text="Create Account" variant="primary" block=True type="submit" %}
     </form>
