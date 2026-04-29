@@ -10,7 +10,8 @@
       <p class="topic-meta">Created {{ topic.date_added|date:"F j, Y" }} • {{ entries|length }} entries</p>
     </div>
     <div class="topic-actions">
-      {% include "components/button.html" with text="Add Entry" variant="primary" href="learning_logs:new_entry" href_extra=topic.id %}
+      {% url 'learning_logs:new_entry' topic.id as new_entry_url %}
+      {% include "components/button.html" with text="Add Entry" variant="primary" href=new_entry_url %}
     </div>
   </div>
 </div>
@@ -41,7 +42,8 @@
     <div class="empty-icon">📝</div>
     <h3>No entries yet</h3>
     <p>Start documenting your learning by adding your first entry to this topic.</p>
-    {% include "components/button.html" with text="Write First Entry" variant="primary" href="learning_logs:new_entry" href_extra=topic.id %}
+    {% url 'learning_logs:new_entry' topic.id as new_entry_url %}
+    {% include "components/button.html" with text="Write First Entry" variant="primary" href=new_entry_url %}
   </div>
   {% endblock %}
   {% endblock %}

@@ -55,19 +55,27 @@ class LearningLogUI {
     const toggles = document.querySelectorAll('.password-toggle');
 
     toggles.forEach(toggle => {
-      toggle.addEventListener('click', () => {
-        const targetId = toggle.dataset.target;
-        const targetInput = document.getElementById(targetId);
+      const targetId = toggle.dataset.target;
+      const targetInput = document.getElementById(targetId);
 
-        if (targetInput) {
+      if (targetInput) {
+        this.updatePasswordToggleIcon(toggle, targetInput.type === 'password');
+
+        toggle.addEventListener('click', () => {
           const isPassword = targetInput.type === 'password';
           targetInput.type = isPassword ? 'text' : 'password';
-          toggle.textContent = isPassword ? '🙈' : '👁️';
-          toggle.setAttribute('aria-label',
-            isPassword ? 'Hide password' : 'Show password');
-        }
-      });
+          this.updatePasswordToggleIcon(toggle, !isPassword);
+        });
+      }
     });
+  }
+
+  updatePasswordToggleIcon(toggle, isPassword) {
+    const showIcon = '👁️';
+    const hideIcon = '🙈';
+
+    toggle.textContent = isPassword ? showIcon : hideIcon;
+    toggle.setAttribute('aria-label', isPassword ? 'Show password' : 'Hide password');
   }
 
   /**

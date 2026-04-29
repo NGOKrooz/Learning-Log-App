@@ -24,7 +24,8 @@
 
     <div class="form-actions">
       {% include "components/button.html" with text="Save Entry" variant="primary" type="submit" %}
-      {% include "components/button.html" with text="Cancel" variant="ghost" href="learning_logs:topic" href_extra=topic.id %}
+      {% url 'learning_logs:topic' topic.id as topic_url %}
+      {% include "components/button.html" with text="Cancel" variant="ghost" href=topic_url %}
     </div>
   </form>
   {% endblock %}

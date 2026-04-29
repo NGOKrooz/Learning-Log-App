@@ -8,7 +8,21 @@ from django.http import Http404
 
 def index(request):
     """The home page for Learning Log."""
-    return render(request, 'learning_logs/index.html')
+    topics_count = 0
+    entries_count = 0
+    recent_entries = Entry.objects.none()
+
+    if request.user.is_authenticated:
+        topics_count = Topic.objects.filter(owner=request.user).count()
+        entries_count = Entry.objects.filter(topic__owner=request.user).count()
+        recent_entries = Entry.objects.filter(topic__owner=request.user).order_by('-date_added')[:5]
+
+    context = {
+        'topics_count': topics_count,
+        'entries_count': entries_count,
+        'recent_entries': recent_entries,
+    }
+    return render(request, 'learning_logs/index.html', context)
 
 @login_required
 def topics(request):

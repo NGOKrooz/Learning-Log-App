@@ -37,14 +37,16 @@
     <div class="empty-icon">📚</div>
     <h3>No topics yet</h3>
     <p>Start your learning journey by creating your first topic.</p>
-    {% include "components/button.html" with text="Create Your First Topic" variant="primary" href="learning_logs:new_topic" %}
+    {% url 'learning_logs:new_topic' as new_topic_url %}
+    {% include "components/button.html" with text="Create Your First Topic" variant="primary" href=new_topic_url %}
   </div>
   {% endblock %}
   {% endblock %}
   {% endif %}
 
   <div class="topics-actions">
-    {% include "components/button.html" with text="Add New Topic" variant="primary" href="learning_logs:new_topic" %}
+    {% url 'learning_logs:new_topic' as new_topic_url %}
+    {% include "components/button.html" with text="Add New Topic" variant="primary" href=new_topic_url %}
   </div>
 </div>
 {% endblock %}

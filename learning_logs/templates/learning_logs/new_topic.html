@@ -20,7 +20,8 @@
 
     <div class="form-actions">
       {% include "components/button.html" with text="Create Topic" variant="primary" type="submit" %}
-      {% include "components/button.html" with text="Cancel" variant="ghost" href="learning_logs:topics" %}
+      {% url 'learning_logs:topics' as topics_url %}
+      {% include "components/button.html" with text="Cancel" variant="ghost" href=topics_url %}
     </div>
   </form>
   {% endblock %}
