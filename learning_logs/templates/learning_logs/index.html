@@ -32,14 +32,14 @@
 {% block content %}
 {% if user.is_authenticated %}
 <div class="dashboard-overview">
-  <div class="stats-grid">
+  <div class="stats-container">
     <div class="stat-card">
-      <div class="stat-number">{{ topics_count }}</div>
-      <div class="stat-label">Topics Created</div>
+      <h2 class="stat-number">{{ topics_count }}</h2>
+      <p class="stat-label">Topics Created</p>
     </div>
     <div class="stat-card">
-      <div class="stat-number">{{ entries_count }}</div>
-      <div class="stat-label">Entries Written</div>
+      <h2 class="stat-number">{{ entries_count }}</h2>
+      <p class="stat-label">Entries Written</p>
     </div>
   </div>
 </div>
