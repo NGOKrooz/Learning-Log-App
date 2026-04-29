@@ -18,35 +18,29 @@
         <!-- Site Header -->
         <header class="site-header">
             <div class="container header-content">
-                <a href="{% url 'learning_logs:index' %}" class="site-title">
-                    <span class="brand-mark">LL</span>
-                    Learning Log
-                </a>
+                <nav class="navbar" aria-label="Primary navigation">
+                    <div class="nav-left">
+                        <a href="{% url 'learning_logs:index' %}" class="site-title">
+                            <span class="brand-mark">LL</span>
+                            Learning Log
+                        </a>
+                    </div>
 
-                <button class="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" aria-label="Toggle navigation">
-                    <span class="nav-toggle-icon">☰</span>
-                </button>
-
-                <nav id="primary-navigation" class="nav-menu" aria-label="Primary navigation">
-                    <ul class="nav-list">
+                    <div class="nav-right">
                         {% if user.is_authenticated %}
-                        <li class="nav-item nav-greeting-item">
-                            <span class="user-pill">
-                                <span class="avatar-circle">{{ user.username|slice:":1"|upper }}</span>
-                                <span class="pill-text">Hello, <strong>{{ user.username }}</strong></span>
-                            </span>
-                        </li>
-                        <li class="nav-item">
-                            <form action="{% url 'accounts:logout' %}" method="post" class="nav-form">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-ghost btn-sm">Log out</button>
-                            </form>
-                        </li>
+                        <span class="user-pill">
+                            <span class="avatar-circle">👋</span>
+                            <span class="pill-text">Hello, <strong>{{ user.username }}</strong></span>
+                        </span>
+                        <form action="{% url 'accounts:logout' %}" method="post" class="nav-form">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-ghost btn-sm">Logout</button>
+                        </form>
                         {% else %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}">Sign in</a></li>
-                        <li class="nav-item"><a class="nav-link nav-link-primary" href="{% url 'accounts:register' %}">Register</a></li>
+                        <a class="nav-link" href="{% url 'accounts:login' %}">Login</a>
+                        <a class="nav-link nav-link-primary" href="{% url 'accounts:register' %}">Sign Up</a>
                         {% endif %}
-                    </ul>
+                    </div>
                 </nav>
             </div>
         </header>

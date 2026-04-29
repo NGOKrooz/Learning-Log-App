@@ -172,8 +172,8 @@ a:hover {
 /* Header */
 .site-header {
   background-color: var(--color-white);
-  border-bottom: 1px solid var(--color-gray-200);
-  box-shadow: var(--shadow-sm);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
   position: sticky;
   top: 0;
   z-index: var(--z-sticky);
@@ -182,15 +182,38 @@ a:hover {
 .header-content {
   display: flex;
   align-items: center;
+  justify-content: center;
+  padding: var(--spacing-3) var(--spacing-4);
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
   justify-content: space-between;
-  padding: var(--spacing-4) 0;
+  width: 100%;
+  gap: var(--spacing-4);
+}
+
+.nav-left,
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  flex-wrap: nowrap;
 }
 
 .site-title {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-3);
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
   color: var(--color-primary);
   margin: 0;
+}
+
+.site-title:hover {
+  color: var(--color-primary-dark);
 }
 
 .site-title a {
@@ -198,36 +221,83 @@ a:hover {
   text-decoration: none;
 }
 
-.nav-links {
-  display: flex;
-  gap: var(--spacing-6);
+.brand-mark {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius-full);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  color: var(--color-white);
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
 }
 
-.nav-link {
+.nav-link,
+.nav-link-primary,
+.nav-form .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-2) var(--spacing-3);
+  border-radius: var(--border-radius-lg);
+  text-decoration: none;
   color: var(--color-gray-700);
   font-weight: var(--font-weight-medium);
-  padding: var(--spacing-2) var(--spacing-3);
-  border-radius: var(--border-radius-md);
-  transition: all var(--transition-fast);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+  white-space: nowrap;
 }
 
-.nav-link:hover {
-  color: var(--color-primary);
+.nav-link:hover,
+.nav-link-primary:hover,
+.nav-form .btn:hover {
   background-color: var(--color-gray-100);
 }
 
-.user-greeting {
-  display: flex;
+.nav-link-primary {
+  color: var(--color-primary);
+}
+
+.nav-form {
+  width: auto;
+}
+
+.user-pill {
+  display: inline-flex;
   align-items: center;
   gap: var(--spacing-2);
-  padding: var(--spacing-2) var(--spacing-3);
-  border-radius: var(--border-radius-2xl);
-  background-color: var(--color-gray-100);
-  color: var(--color-gray-800);
+  padding: 0.25rem 0.625rem;
+  border-radius: var(--border-radius-full);
+  background-color: rgba(102, 126, 234, 0.12);
+  color: var(--color-gray-900);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   white-space: nowrap;
+}
+
+.avatar-circle {
+  width: 1.75rem;
+  height: 1.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius-full);
+  background-color: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  font-weight: var(--font-weight-bold);
+  font-size: 0.875rem;
+  flex-shrink: 0;
+}
+
+.pill-text {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+}
+
+.pill-text strong {
+  font-weight: var(--font-weight-bold);
 }
 
 .avatar-circle {
@@ -588,13 +658,18 @@ a:hover {
   }
 
   .header-content {
-    flex-direction: column;
-    gap: var(--spacing-4);
+    padding: var(--spacing-3) var(--spacing-3);
   }
 
-  .nav-links {
-    flex-wrap: wrap;
-    justify-content: center;
+  .nav-right {
+    gap: var(--spacing-3);
+  }
+
+  .nav-link,
+  .nav-link-primary,
+  .nav-form .btn {
+    font-size: var(--font-size-sm);
+    padding: var(--spacing-2) var(--spacing-2);
   }
 
   .card {
@@ -619,10 +694,6 @@ a:hover {
     font-size: var(--font-size-lg);
   }
 
-  .nav-links {
-    gap: var(--spacing-3);
-  }
-
   .card {
     padding: var(--spacing-3);
     border-radius: var(--border-radius-lg);
@@ -640,22 +711,12 @@ a:hover {
 }
 
 @media (min-width: 768px) {
-  .nav-toggle {
-    display: none;
+  .header-content {
+    padding: var(--spacing-3) var(--spacing-4);
   }
 
-  .nav-menu {
-    max-height: none;
-  }
-
-  .nav-list {
-    display: flex;
-    align-items: center;
+  .nav-right {
     gap: var(--spacing-4);
-  }
-
-  .nav-form {
-    width: auto;
   }
 
   .hero-section {
