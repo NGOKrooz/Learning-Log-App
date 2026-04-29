@@ -11,8 +11,10 @@ class LearningLogUI {
   init() {
     this.setupFormValidation();
     this.setupPasswordToggles();
+    this.setupPasswordRequirements();
     this.setupAlerts();
     this.setupTooltips();
+    this.setupNavigation();
   }
 
   /**
@@ -160,6 +162,23 @@ class LearningLogUI {
           }
         }, 5000);
       }
+    });
+  }
+
+  /**
+   * Setup navigation menu toggling
+   */
+  setupNavigation() {
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+
+    if (!navToggle || !navMenu) {
+      return;
+    }
+
+    navToggle.addEventListener('click', () => {
+      const isOpen = navMenu.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     });
   }
 
